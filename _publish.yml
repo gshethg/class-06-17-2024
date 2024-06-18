@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 92227fe8-8a21-4486-9b04-a747c8e72eaf
+      url: 'https://gshethg.quarto.pub/nyc-census-plot'
