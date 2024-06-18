@@ -1,0 +1,47 @@
+---
+title: "New York Median Income Plot"
+execute: 
+  echo: false
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidycensus)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+```
+
+
+```{r}
+#| label: plotdata
+#| message: false
+
+# Set your Census API key
+#census_api_key("82715b180ec50350006a7b3864f331861bda546a", install = TRUE, overwrite = TRUE)
+
+# Load the data with geometry
+variables <- c(median_income = "B19013_001")
+ny_income_geo <- get_acs(
+  geography = "county", 
+  variables = variables, 
+  state = "NY", 
+  year = 2020, 
+  survey = "acs5", 
+  geometry = TRUE, progress=FALSE
+)
+
+# Plot the data
+ggplot(ny_income_geo) +
+  geom_sf(aes(fill = estimate), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey50") +
+  theme_minimal() +
+  labs(
+    title = "Median Household Income in New York State by County",
+    fill = "Median Income",
+    caption = "Source: U.S. Census Bureau, 2020 ACS 5-Year Estimates"
+  )
+```
+
